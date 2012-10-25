@@ -1,0 +1,66 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Getopt::Long;
+use Pod::Usage;
+
+$main::VERSION = '1.0';
+if (@ARGV) {
+	Getopt::Long::Configure qw{no_auto_abbrev no_ignore_case no_getopt_compat};
+	GetOptions(
+		'help|h|?' => sub { pod2usage -verbose => 1 },
+		'manual|m' => sub { pod2usage -verbose => 2 },
+	) or pod2usage -exitval => 2;
+}
+
+push @ARGV, time unless @ARGV;
+
+my @wdays = qw{Sun Mon Tue Wed Thu Fri Sat};
+my @months = qw{Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec};
+
+foreach (@ARGV) {
+	$_ = time if $_ eq '-';
+	my ($sec, $min, $hour, $mday, $mon, $year, $wday, , ) = localtime $_;
+	printf "%d = %s %s %2d %02d:%02d:%02d %d\n", $_, $wdays[$wday], $months[$mon], $mday, $hour, $min, $sec, $year + 1900;
+}
+
+__END__
+
+=head1 NAME
+
+ctime: Convert Unix times to human-readable format
+
+=head1 SYNOPSIS
+
+=over
+
+=item B<ctime> [B<-h|m>] [--] [I<time> ...]
+
+=back
+
+=head1 DESCRIPTION
+
+This command duplicates the I<bpdbm -ctime> command, but does not require root privileges to run. It also accepts multiple times in a single command.
+
+=head1 OPTIONS
+
+=over
+
+=item B<--help|-h>
+
+Display a brief usage statement.
+
+=item B<--manual|-m>
+
+Display full help.
+
+=item B<I<time>>
+
+The integer Unix time value to convert. Run with no parameters or a C<-> for the current time. If the value is negative, stop argument parsing first with C<-->, or else the time will be interpretted as a command switch.
+
+=back
+
+=head1 AUTHOR
+
+Rob Kennedy, kennedyri@gmail.com
