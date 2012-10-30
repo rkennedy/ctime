@@ -21,7 +21,8 @@ my @months = qw{Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec};
 foreach (@ARGV) {
 	$_ = time if $_ eq '-';
 	my ($sec, $min, $hour, $mday, $mon, $year, $wday, , ) = localtime $_;
-	printf "%d = %s %s %2d %02d:%02d:%02d %d\n", $_, $wdays[$wday], $months[$mon], $mday, $hour, $min, $sec, $year + 1900;
+	printf "%d = %s %s %2d %02d:%02d:%02d %d\n", $_, $wdays[$wday],
+		$months[$mon], $mday, $hour, $min, $sec, $year + 1900;
 }
 
 __END__
@@ -40,7 +41,9 @@ ctime: Convert Unix times to human-readable format
 
 =head1 DESCRIPTION
 
-This command duplicates the I<bpdbm -ctime> command, but does not require root privileges to run. It also accepts multiple times in a single command.
+This command duplicates the I<bpdbm -ctime> command, but does not
+require root privileges to run. It also accepts multiple times in a
+single command.
 
 =head1 OPTIONS
 
@@ -60,7 +63,10 @@ Display version information.
 
 =item B<I<time>>
 
-The integer Unix time value to convert. Run with no parameters or a C<-> for the current time. If the value is negative, stop argument parsing first with C<-->, or else the time will be interpretted as a command switch.
+The integer Unix time value to convert. Run with no parameters or a C<->
+for the current time. If the value is negative, stop argument parsing
+first with C<-->, or else the time will be interpretted as a command
+switch.
 
 =back
 
